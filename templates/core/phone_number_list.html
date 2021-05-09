@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phone numbers</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td> Name </td>
+        <td> number </td>
+        <td> coutry name </td>
+    </tr>
+    {% for number in phone_numbers %}
+    <tr>
+        <td> {{ number.name }} </td>
+        <td> {{ number.full_number }} </td>
+        <td> {{ number.country.name }} </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
