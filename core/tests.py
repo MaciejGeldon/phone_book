@@ -20,3 +20,5 @@ def test_django_template_view_single_entry(client):
     response = client.get(reverse('core:number_list'))
 
     assert response.status_code == 200
+    assert 'phone_numbers' in response.context
+    assert len(response.context['phone_numbers'] == 1)
