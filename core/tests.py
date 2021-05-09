@@ -3,7 +3,6 @@ from django.urls import reverse
 from core.factories import EntryFactory, CountryFactory
 
 
-@pytest.mark.django_db
 def test_if_phone_number_added_correctly():
     example_entry = EntryFactory()
 
@@ -13,7 +12,6 @@ def test_if_phone_number_added_correctly():
     assert example_entry.full_number == f'{prefix} {local_part}'
 
 
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     'resp_length', [
         1, 2
@@ -30,7 +28,6 @@ def test_django_template_view_single_entry(client, resp_length):
     assert len(response.context['phone_numbers']) == resp_length
 
 
-@pytest.mark.django_db
 def test_country_detail(client):
     country = CountryFactory()
 
@@ -42,7 +39,6 @@ def test_country_detail(client):
     assert response.context['country'].prefix == country.prefix
 
 
-@pytest.mark.django_db
 def test_country_detail_not_found(client):
     response = client.get(reverse('core:country', kwargs={'name': 'non exisitng'}))
 
