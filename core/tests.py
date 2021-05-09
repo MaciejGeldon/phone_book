@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from core.factories import EntryFactory
+from core.factories import EntryFactory, CountryFactory
 
 
 @pytest.mark.django_db
@@ -28,3 +28,22 @@ def test_django_template_view_single_entry(client, resp_length):
     assert response.status_code == 200
     assert 'phone_numbers' in response.context
     assert len(response.context['phone_numbers']) == resp_length
+
+
+@pytest.mark.django_db
+def test_country_detail(client):
+    country = CountryFactory()
+
+    response = client.get(reverse('core:country', kwargs={'name': country.name}))
+
+    assert response.status_code == 200
+    assert 'country' in response.context
+    assert response.context['country'].name == country.name
+    assert response.context['country'].prefix == country.prefix
+
+
+@pytest.mark.django_db
+def test_country_detail_not_found(client):
+    response = client.get(reverse('core:country', kwargs={'name': 'non exisitng'}))
+
+    assert response.status_code == 404
